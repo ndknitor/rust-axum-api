@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug rust-axum-api",
+            "cargo": {
+                "args": ["build", "--bin=rust-axum-api", "--package=rust-axum-api"],
+                "filter": {
+                    "name": "rust-axum-api",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PATH": "${env:HOME}/.cargo/bin:${env:PATH}"
+            }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests",
+            "cargo": {
+                "args": ["test", "--no-run", "--lib"],
+                "filter": {
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PATH": "${env:HOME}/.cargo/bin:${env:PATH}"
+            }
+        }
+    ]
+}
