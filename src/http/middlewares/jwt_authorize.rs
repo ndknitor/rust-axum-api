@@ -1,5 +1,5 @@
-use crate::config;
-use crate::middlewares::Claims;
+use crate::config::Config;
+use super::Claims;
 use actix_web::HttpMessage;
 use actix_web::{
     Error, HttpResponse,
@@ -113,7 +113,7 @@ where
         let policies = self.policies.clone();
 
         Box::pin(async move {
-            let secret = config::Config::from_env().jwt_secret;
+            let secret = Config::from_env().jwt_secret;
 
             let token = match extract_token(&req) {
                 Some(t) => t,
