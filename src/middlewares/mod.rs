@@ -1,7 +1,15 @@
-mod authorize;
-mod cookie;
-mod jwt;
+pub mod request_logger;
+pub mod jwt_authorize;
 
-pub use authorize::{Authorize, AuthorizeError, authorize_layer};
-pub use cookie::{AUTH_COOKIE_NAME, CookieAuth};
-pub use jwt::{Claims, JwtAuth};
+
+use serde::{Serialize, Deserialize};
+
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Claims {
+    pub sub: String,
+    pub exp: usize,
+
+    pub roles: Vec<String>,
+    pub policies: Vec<String>,
+}

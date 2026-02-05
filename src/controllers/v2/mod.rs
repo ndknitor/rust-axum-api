@@ -1,7 +1,10 @@
-pub mod root;
+pub mod user;
 
-use axum::Router;
+use actix_web::web;
 
-pub fn router() -> Router {
-    Router::new().merge(root::router())
+pub fn routes(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/users")
+            .route("", web::get().to(user::get_users_v2))
+    );
 }

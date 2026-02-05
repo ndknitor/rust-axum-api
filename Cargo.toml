@@ -1,5 +1,5 @@
 [package]
-name = "rust-axum-api"
+name = "rust-actix-api"
 version = "0.1.0"
 edition = "2024"
 
@@ -7,16 +7,14 @@ edition = "2024"
 linker = "musl-gcc"
 
 [dependencies]
-axum = { version = "0.8", features = ["ws"] }
-tokio = { version = "1", features = ["full"] }
-dotenvy = "0.15"
-tower-http = { version = "0.6", features = ["trace"]}  # use fs feature if api need to serve static filess
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-utoipa = "5"
-utoipa-swagger-ui = { version = "9", features = ["axum"] }
-jsonwebtoken = "9"
+actix-web = "4"
 serde = { version = "1", features = ["derive"] }
-chrono = { version = "0.4", features = ["serde"] }
-axum-extra = { version = "0.10", features = ["cookie"] }
-time = "0.3"
+serde_json = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+env_logger = "0.11"
+log = "0.4"
+async-trait = "0.1"
+dotenvy = "0.15"
+futures-util = "0.3"
+jsonwebtoken = "9"
+actix-cors = "0.7"

@@ -4,11 +4,11 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug rust-axum-api",
+            "name": "Debug rust-actix-api",
             "cargo": {
-                "args": ["build", "--bin=rust-axum-api", "--package=rust-axum-api"],
+                "args": ["build", "--bin=rust-actix-api", "--package=rust-actix-api"],
                 "filter": {
-                    "name": "rust-axum-api",
+                    "name": "rust-actix-api",
                     "kind": "bin"
                 }
             },
