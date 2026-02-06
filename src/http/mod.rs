@@ -5,8 +5,9 @@ mod routes;
 use crate::config::Config;
 use crate::services::{OrderServiceFactory, OrderServiceTransient, UserService};
 use actix_cors::Cors;
+// use actix_files::Files;
 use actix_web::{App, HttpServer, web};
-use middlewares::request_logger::RequestLogger;
+// use middlewares::request_logger::RequestLogger;
 use std::sync::Arc;
 
 /// Start HTTP server
@@ -35,17 +36,17 @@ where
         }
         App::new()
             // Singleton: same Arc shared across all requests
-            .app_data(web::Data::<Arc<dyn UserService>>::new(
-                user_service.clone(),
-            ))
+            .app_data(web::Data::<Arc<dyn UserService>>::new(user_service.clone()))
             // Scoped: factory registered, controller calls factory.create() once per request
             .app_data(web::Data::<Arc<dyn OrderServiceFactory>>::new(
                 order_service_factory.clone(),
             ))
             // Transient: function pointer, controller calls it every time it needs an instance
             .app_data(web::Data::new(order_service_transient))
-            .wrap(RequestLogger)
+            // .wrap(RequestLogger)
             .wrap(cors)
+            // Serve static file
+            // .service(Files::new("/", "./wwwroot").index_file("index.html"))
             .configure(routes::config)
     })
     .bind((cfg.host.as_str(), cfg.http_port))?
