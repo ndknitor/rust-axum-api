@@ -26,14 +26,18 @@ where
     let cfg = Config::from_env();
     let addr = format!("{}:{}", cfg.host, cfg.grpc_port).parse()?;
 
-    println!("Starting gRPC server on {}", addr);
+    println!("Starting gRPC server on grpc://{}", addr);
 
     let user_controller = UserController::new(user_service);
     let order_controller = OrderController::new(order_service_factory);
 
     Server::builder()
-        .add_service(proto::user_service_server::UserServiceServer::new(user_controller))
-        .add_service(proto::order_service_server::OrderServiceServer::new(order_controller))
+        .add_service(proto::user_service_server::UserServiceServer::new(
+            user_controller,
+        ))
+        .add_service(proto::order_service_server::OrderServiceServer::new(
+            order_controller,
+        ))
         .serve(addr)
         .await?;
 

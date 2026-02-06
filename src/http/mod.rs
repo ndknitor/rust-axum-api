@@ -24,7 +24,7 @@ where
     F: OrderServiceFactory + 'static,
 {
     let cfg = Config::from_env();
-    println!("Starting server on {}:{}", cfg.host, cfg.http_port);
+    println!("Starting HTTP server on http://{}:{}", cfg.host, cfg.http_port);
 
     HttpServer::new(move || {
         let mut cors = Cors::default()
