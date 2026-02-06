@@ -22,7 +22,7 @@ RUN touch src/main.rs && cargo build --release --target x86_64-unknown-linux-mus
 # # ---------- RUNTIME STAGE FROM ALPINE ----------
 # FROM alpine
 # WORKDIR /app
-# COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/rust-actix-api /app/main
+# COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/rust-api-server /app/main
 # # COPY wwwroot /app/wwwroot
 # USER nobody
 # EXPOSE 3000
@@ -33,11 +33,11 @@ RUN touch src/main.rs && cargo build --release --target x86_64-unknown-linux-mus
 # ---------- RUNTIME STAGE FROM SCRATCH ----------
 FROM scratch
 WORKDIR /app
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/rust-actix-api /app/main
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/rust-api-server /app/main
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # COPY wwwroot /app/wwwroot
 USER 1000:1000
-EXPOSE 3000
+EXPOSE 8080
 ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV HTTP_PORT=8080
 ENTRYPOINT ["/app/main"]
