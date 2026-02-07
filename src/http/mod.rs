@@ -1,4 +1,4 @@
-mod controllers;
+mod endpoints;
 mod middlewares;
 mod routes;
 

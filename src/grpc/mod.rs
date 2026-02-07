@@ -1,16 +1,12 @@
-mod controllers;
+mod endpoints;
 
 use crate::config::Config;
+use crate::proto;
 use crate::services::{OrderServiceFactory, UserService};
-use controllers::order::OrderController;
-use controllers::user::UserController;
+use endpoints::order::OrderEndpoint;
+use endpoints::user::UserEndpoint;
 use std::sync::Arc;
 use tonic::transport::Server;
-
-pub mod proto {
-    tonic::include_proto!("user");
-    tonic::include_proto!("order");
-}
 
 /// Start gRPC server
 /// - user_service: Singleton (shared Arc across all requests)
@@ -28,15 +24,15 @@ where
 
     println!("Starting gRPC server on grpc://{}", addr);
 
-    let user_controller = UserController::new(user_service);
-    let order_controller = OrderController::new(order_service_factory);
+    let user_endpoint = UserEndpoint::new(user_service);
+    let order_endpoint = OrderEndpoint::new(order_service_factory);
 
     Server::builder()
         .add_service(proto::user_service_server::UserServiceServer::new(
-            user_controller,
+            user_endpoint,
         ))
         .add_service(proto::order_service_server::OrderServiceServer::new(
-            order_controller,
+            order_endpoint,
         ))
         .serve(addr)
         .await?;

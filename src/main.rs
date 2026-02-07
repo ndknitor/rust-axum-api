@@ -1,6 +1,8 @@
 mod config;
+mod controllers;
 // mod grpc;
 mod http;
+mod proto;
 mod services;
 
 use services::{create_order_service, OrderServiceFactoryImpl, UserServiceImpl};
